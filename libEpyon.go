@@ -206,22 +206,31 @@ func ClearScreen() error {
 	return err
 }
 
-// AnsiCmd sends ANSI Escape Codes to terminal
-// CURSOR_HOME:        Moves cursor to home position (0,0)
-// CURSOR_MOVE, Y, X:  Moves cursor to line Y, column X
-// CURSOR_UP, N:       Moves cursor up N lines
-// CURSOR_DOWN, N:     Moves cursor down N lines
-// CURSOR_RIGHT, N:    Moves cursor right N columns
-// CURSOR_LEFT, N:     Moves cursor left N columns
-// CURSOR_BEG_DOWN, N: Moves cursor to beginning of next line, N lines down
-// CURSOR_BEG_UP, N:   Moves cursor to beginning of previous line, N lines up
-// CURSOR_COLUMN, N:   Moves cursor to column N
-// CURSOR_REQ_POS:     Request cursor position
-// CURSOR_UP_ONE:      Moves cursor one line up, scrolling if needed
-// CURSOR_SAVE_POS:    Save cursor position (DEC) (recommended)
-// CURSOR_LOAD_POS:    Restores the cursor to the last saved position (DEC)
-// CURSOR_SAVE_POS2:   Save cursor position (SCO)
-// CURSOR_LOAD_POS2:   Restores the cursor to the last saved position (SCO)
+/*
+AnsiCmd sends ANSI Escape Codes to terminal
+CURSOR_HOME:        Moves cursor to home position (0,0)
+CURSOR_MOVE, Y, X:  Moves cursor to line Y, column X
+CURSOR_UP, N:       Moves cursor up N lines
+CURSOR_DOWN, N:     Moves cursor down N lines
+CURSOR_RIGHT, N:    Moves cursor right N columns
+CURSOR_LEFT, N:     Moves cursor left N columns
+CURSOR_BEG_DOWN, N: Moves cursor to beginning of next line, N lines down
+CURSOR_BEG_UP, N:   Moves cursor to beginning of previous line, N lines up
+CURSOR_COLUMN, N:   Moves cursor to column N
+CURSOR_REQ_POS:     Request cursor position
+CURSOR_UP_ONE:      Moves cursor one line up, scrolling if needed
+CURSOR_SAVE_POS:    Save cursor position (DEC) (recommended)
+CURSOR_LOAD_POS:    Restores the cursor to the last saved position (DEC)
+CURSOR_SAVE_POS2:   Save cursor position (SCO)
+CURSOR_LOAD_POS2:   Restores the cursor to the last saved position (SCO)
+CURSOR_ERASE_END:   Erase from cursor until end of screen
+CURSOR_ERASE_BEG:   Erase from cursor to beginning of screen
+CURSOR_ERASE_ALL:   Erase entire screen
+CURSOR_ERASE_SAVE:  Erase saved lines
+CURSOR_ERASE_EOL:   Erase from cursor to end of line
+CURSOR_ERASE_SOL:   Erase start of line to the cursor
+CURSOR_ERASE_LINE:  Erase the entire line
+*/
 func AnsiCmd(command string, values ...int) error {
 	var err error
 	var escape string = "\033"
@@ -289,6 +298,20 @@ func AnsiCmd(command string, values ...int) error {
 		fmt.Fprintf(os.Stdout, "%s[s", escape)
 	case "CURSOR_LOAD_POS2":
 		fmt.Fprintf(os.Stdout, "%s[u", escape)
+	case "CURSOR_ERASE_END":
+		fmt.Fprintf(os.Stdout, "%s[0J", escape)
+	case "CURSOR_ERASE_BEG":
+		fmt.Fprintf(os.Stdout, "%s[1J", escape)
+	case "CURSOR_ERASE_ALL":
+		fmt.Fprintf(os.Stdout, "%s[2J", escape)
+	case "CURSOR_ERASE_SAVE":
+		fmt.Fprintf(os.Stdout, "%s[3J", escape)
+	case "CURSOR_ERASE_EOL":
+		fmt.Fprintf(os.Stdout, "%s[0K", escape)
+	case "CURSOR_ERASE_SOL":
+		fmt.Fprintf(os.Stdout, "%s[1K", escape)
+	case "CURSOR_ERASE_LINE":
+		fmt.Fprintf(os.Stdout, "%s[2K", escape)
 	}
 
 	return err
