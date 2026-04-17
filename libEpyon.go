@@ -57,8 +57,8 @@ func (l *LinkedList) Pop() (any, error) {
 	var err error
 
 	if l.length > 0 {
-		data = l.head.data
-		l.head = l.head.next
+		data = l.Head().Data()
+		l.head = l.Head().Next()
 		l.length--
 	} else {
 		err = fmt.Errorf("linkedlist is empty")
@@ -69,12 +69,12 @@ func (l *LinkedList) Pop() (any, error) {
 
 // Peek returns the data at the head of a linkedlist without modification
 func (l *LinkedList) Peek() any {
-	return l.head.data
+	return l.Head().Data()
 }
 
 // IsEmpty returns if the linkedlist is empty or not
 func (l *LinkedList) IsEmpty() bool {
-	if l.head == nil {
+	if l.Head() == nil {
 		return true
 	} else {
 		return false
@@ -93,9 +93,9 @@ func (l *LinkedList) Print(node *Node) string {
 // PrintAll returns a string to display the value of the entire linkedlist
 func (l *LinkedList) PrintAll() string {
 	var output string
-	currentNode := l.head
+	currentNode := l.Head()
 
-	for i := 0; i < l.length; i++ {
+	for i := 0; i < l.Length(); i++ {
 		switch {
 		case l.length >= int(math.Pow(10, 10)):
 			output = fmt.Sprintf("%s%-10d: %s\n", output, i, PrintValue(currentNode.data))
