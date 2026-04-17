@@ -100,25 +100,25 @@ func (l *LinkedList) PrintAll() string {
 	for i := 0; i < l.Length(); i++ {
 		switch {
 		case l.Length()-1 >= int(math.Pow(10, 10)):
-			output = fmt.Sprintf("%s%-10d: %s\n", output, i, PrintValue(currentNode.data))
+			output = fmt.Sprintf("%s%-11d: %s\n", output, i, PrintValue(currentNode.data))
 		case l.Length()-1 >= int(math.Pow(10, 9)):
-			output = fmt.Sprintf("%s%-9d: %s\n", output, i, PrintValue(currentNode.data))
+			output = fmt.Sprintf("%s%-10d: %s\n", output, i, PrintValue(currentNode.data))
 		case l.Length()-1 >= int(math.Pow(10, 8)):
-			output = fmt.Sprintf("%s%-8d: %s\n", output, i, PrintValue(currentNode.data))
+			output = fmt.Sprintf("%s%-9d: %s\n", output, i, PrintValue(currentNode.data))
 		case l.Length()-1 >= int(math.Pow(10, 7)):
-			output = fmt.Sprintf("%s%-7d: %s\n", output, i, PrintValue(currentNode.data))
+			output = fmt.Sprintf("%s%-8d: %s\n", output, i, PrintValue(currentNode.data))
 		case l.Length()-1 >= int(math.Pow(10, 6)):
-			output = fmt.Sprintf("%s%-6d: %s\n", output, i, PrintValue(currentNode.data))
+			output = fmt.Sprintf("%s%-7d: %s\n", output, i, PrintValue(currentNode.data))
 		case l.Length()-1 >= int(math.Pow(10, 5)):
-			output = fmt.Sprintf("%s%-5d: %s\n", output, i, PrintValue(currentNode.data))
+			output = fmt.Sprintf("%s%-6d: %s\n", output, i, PrintValue(currentNode.data))
 		case l.Length()-1 >= int(math.Pow(10, 4)):
-			output = fmt.Sprintf("%s%-4d: %s\n", output, i, PrintValue(currentNode.data))
+			output = fmt.Sprintf("%s%-5d: %s\n", output, i, PrintValue(currentNode.data))
 		case l.Length()-1 >= int(math.Pow(10, 3)):
-			output = fmt.Sprintf("%s%-3d: %s\n", output, i, PrintValue(currentNode.data))
+			output = fmt.Sprintf("%s%-4d: %s\n", output, i, PrintValue(currentNode.data))
 		case l.Length()-1 >= int(math.Pow(10, 2)):
-			output = fmt.Sprintf("%s%-2d: %s\n", output, i, PrintValue(currentNode.data))
+			output = fmt.Sprintf("%s%-3d: %s\n", output, i, PrintValue(currentNode.data))
 		case l.Length()-1 >= int(math.Pow(10, 1)):
-			output = fmt.Sprintf("%s%-1d: %s\n", output, i, PrintValue(currentNode.data))
+			output = fmt.Sprintf("%s%-2d: %s\n", output, i, PrintValue(currentNode.data))
 		default:
 			output = fmt.Sprintf("%s%d: %s\n", output, i, PrintValue(currentNode.data))
 		}
