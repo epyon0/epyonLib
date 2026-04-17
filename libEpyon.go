@@ -24,6 +24,22 @@ type LinkedList struct {
 	length int
 }
 
+func (n *Node) Data() any {
+	return n.data
+}
+
+func (n *Node) Next() *Node {
+	return n.next
+}
+
+func (l *LinkedList) Head() *Node {
+	return l.head
+}
+
+func (l *LinkedList) Length() int {
+	return l.length
+}
+
 // Push adds item to the begining of a linkedlist
 func (l *LinkedList) Push(data any) {
 	newNode := &Node{data: data, next: l.head}
