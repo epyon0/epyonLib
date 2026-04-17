@@ -96,7 +96,7 @@ func (l *LinkedList) PrintAll() string {
 	currentNode := l.head
 
 	for i := 0; i < l.length; i++ {
-		output = fmt.Sprintf("%s%d: %s\n", output, i, PrintValue(currentNode.data))
+		output = fmt.Sprintf("%s%-6d: %s\n", output, i, PrintValue(currentNode.data))
 		currentNode = currentNode.next
 	}
 
