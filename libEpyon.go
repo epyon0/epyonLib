@@ -208,7 +208,6 @@ func ClearScreen() error {
 
 type Ansi struct {
 	Line, Column, Count int
-	FG, BG              Color
 }
 
 // CursorHome moves cursor to home position (0,0)
