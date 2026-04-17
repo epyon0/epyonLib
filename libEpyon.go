@@ -208,6 +208,7 @@ func ClearScreen() error {
 
 type Ansi struct {
 	Line, Column, Count int
+	FG, BG              Color
 }
 
 // CursorHome moves cursor to home position (0,0)
@@ -318,6 +319,145 @@ func (ansi Ansi) CursorEraseLineBeginning() {
 // CursorEraseLineAll erase the entire line
 func (ansi Ansi) CursorEraseLineAll() {
 	fmt.Fprintf(os.Stdout, "\033[2K")
+}
+
+// Reset reset all modes (styles and colors)
+func (ansi Ansi) Reset() {
+	fmt.Fprintf(os.Stdout, "\033[0m")
+}
+
+// TextBold set bold mode
+func (ansi Ansi) TextBold() {
+	fmt.Fprintf(os.Stdout, "\033[1m")
+}
+
+// TextBoldReset reset bold mode (and dim/faint mode)
+func (ansi Ansi) TextBoldReset() {
+	fmt.Fprintf(os.Stdout, "\033[22m")
+}
+
+// TextDim set dim/faint mode
+func (ansi Ansi) TextDim() {
+	fmt.Fprintf(os.Stdout, "\033[2m")
+}
+
+// TextDimReset reset dim/faint mode (and bold mode)
+func (ansi Ansi) TextDimReset() {
+	ansi.TextBoldReset()
+}
+
+// TextFaint set dim/faint mode
+func (ansi Ansi) TextFaint() {
+	ansi.TextDim()
+}
+
+// TextFaintReset reset dim/faint mode (and bold mode)
+func (ansi Ansi) TextFaintReset() {
+	ansi.TextDimReset()
+}
+
+// TextItalic set italic mode
+func (ansi Ansi) TextItalic() {
+	fmt.Fprintf(os.Stdout, "\033[3m")
+}
+
+// TextItalicReset reset italic mode
+func (ansi Ansi) TextItalicReset() {
+	fmt.Fprintf(os.Stdout, "\033[23m")
+}
+
+// TextUnderline set underline mode
+func (ansi Ansi) TextUnderline() {
+	fmt.Fprintf(os.Stdout, "\033[4m")
+}
+
+// TextUnderlineReset reset underline mode
+func (ansi Ansi) TextUnderlineReset() {
+	fmt.Fprintf(os.Stdout, "\033[24m")
+}
+
+// TextBlinking set blinking mode
+func (ansi Ansi) TextBlinking() {
+	fmt.Fprintf(os.Stdout, "\033[5m")
+}
+
+// TextBlinkingReset reset blinking mode
+func (ansi Ansi) TextBlinkingReset() {
+	fmt.Fprintf(os.Stdout, "\033[25m")
+}
+
+// TextInverse set inverse/reverse mode
+func (ansi Ansi) TextInverse() {
+	fmt.Fprintf(os.Stdout, "\033[7m")
+}
+
+// TextInverseReset reset inverse/reverse mode
+func (ansi Ansi) TextInverseReset() {
+	fmt.Fprintf(os.Stdout, "\033[27m")
+}
+
+// TextReverse set inverse/reverse mode
+func (ansi Ansi) TextReverse() {
+	ansi.TextInverse()
+}
+
+// TextReverseReset reset inverse/reverse mode
+func (ansi Ansi) TextReverseReset() {
+	ansi.TextInverseReset()
+}
+
+// TextHidden set hidden/invisible mode
+func (ansi Ansi) TextHidden() {
+	fmt.Fprintf(os.Stdout, "\033[8m")
+}
+
+// TextHiddenReset reset hidden/invisible mode
+func (ansi Ansi) TextHiddenReset() {
+	fmt.Fprintf(os.Stdout, "\033[28m")
+}
+
+// TextInvisible set hidden/invisible mode
+func (ansi Ansi) TextInvisible() {
+	ansi.TextHidden()
+}
+
+// TextInvisibleReset reset hidden/invisible mode
+func (ansi Ansi) TextInvisibleReset() {
+	ansi.TextHiddenReset()
+}
+
+// TextStrikethrough set strikethrough mode
+func (ansi Ansi) TextStrikethrough() {
+	fmt.Fprintf(os.Stdout, "\033[9m")
+}
+
+// TextStrikthroughReset reset strikethrough mode
+func (ansi Ansi) TextStrikethroughReset() {
+	fmt.Fprintf(os.Stdout, "\033[29m")
+}
+
+/*
+	Color.Black.Foreground = 30
+	Color.Red.Foreground = 31
+	Color.Green.Foreground = 32
+	Color.Yellow.Foreground = 33
+	Color.Blue.Foreground = 34
+	Color.Magenta.Foreground = 35
+	Color.Cyan.Foreground = 36
+	Color.White.Foreground = 37
+
+	Color.Black.Background = 40
+	Color.Red.Background = 41
+	Color.Green.Background = 42
+	Color.Yellow.Background = 43
+	Color.Blue.Background = 44
+	Color.Magenta.Background = 45
+	Color.Cyan.Background = 46
+	Color.White.Background = 47
+*/
+
+func (ansi Ansi) Color4BitFG() {
+
 }
 
 // Verbose takes a string and formats and outputs to STDERR
