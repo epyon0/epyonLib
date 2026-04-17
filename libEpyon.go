@@ -96,7 +96,31 @@ func (l *LinkedList) PrintAll() string {
 	currentNode := l.head
 
 	for i := 0; i < l.length; i++ {
-		output = fmt.Sprintf("%s%-6d: %s\n", output, i, PrintValue(currentNode.data))
+		switch {
+		case l.length >= int(math.Pow10(10)):
+			output = fmt.Sprintf("%s%-10d: %s\n", output, i, PrintValue(currentNode.data))
+		case l.length >= int(math.Pow10(9)):
+			output = fmt.Sprintf("%s%-9d: %s\n", output, i, PrintValue(currentNode.data))
+		case l.length >= int(math.Pow10(8)):
+			output = fmt.Sprintf("%s%-8d: %s\n", output, i, PrintValue(currentNode.data))
+		case l.length >= int(math.Pow10(7)):
+			output = fmt.Sprintf("%s%-7d: %s\n", output, i, PrintValue(currentNode.data))
+		case l.length >= int(math.Pow10(6)):
+			output = fmt.Sprintf("%s%-6d: %s\n", output, i, PrintValue(currentNode.data))
+		case l.length >= int(math.Pow10(5)):
+			output = fmt.Sprintf("%s%-5d: %s\n", output, i, PrintValue(currentNode.data))
+		case l.length >= int(math.Pow10(4)):
+			output = fmt.Sprintf("%s%-4d: %s\n", output, i, PrintValue(currentNode.data))
+		case l.length >= int(math.Pow10(3)):
+			output = fmt.Sprintf("%s%-3d: %s\n", output, i, PrintValue(currentNode.data))
+		case l.length >= int(math.Pow10(2)):
+			output = fmt.Sprintf("%s%-2d: %s\n", output, i, PrintValue(currentNode.data))
+		case l.length >= int(math.Pow10(1)):
+			output = fmt.Sprintf("%s%-1d: %s\n", output, i, PrintValue(currentNode.data))
+		default:
+			output = fmt.Sprintf("%s%d: %s\n", output, i, PrintValue(currentNode.data))
+		}
+
 		currentNode = currentNode.next
 	}
 
