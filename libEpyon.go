@@ -1,4 +1,4 @@
-package libEpyon
+package epyonLib
 
 import (
 	"bufio"
