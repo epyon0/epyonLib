@@ -206,115 +206,118 @@ func ClearScreen() error {
 	return err
 }
 
-/*
-AnsiCmd sends ANSI Escape Codes to terminal
-CURSOR_HOME:        Moves cursor to home position (0,0)
-CURSOR_MOVE, Y, X:  Moves cursor to line Y, column X
-CURSOR_UP, N:       Moves cursor up N lines
-CURSOR_DOWN, N:     Moves cursor down N lines
-CURSOR_RIGHT, N:    Moves cursor right N columns
-CURSOR_LEFT, N:     Moves cursor left N columns
-CURSOR_BEG_DOWN, N: Moves cursor to beginning of next line, N lines down
-CURSOR_BEG_UP, N:   Moves cursor to beginning of previous line, N lines up
-CURSOR_COLUMN, N:   Moves cursor to column N
-CURSOR_REQ_POS:     Request cursor position
-CURSOR_UP_ONE:      Moves cursor one line up, scrolling if needed
-CURSOR_SAVE_POS:    Save cursor position (DEC) (recommended)
-CURSOR_LOAD_POS:    Restores the cursor to the last saved position (DEC)
-CURSOR_SAVE_POS2:   Save cursor position (SCO)
-CURSOR_LOAD_POS2:   Restores the cursor to the last saved position (SCO)
-CURSOR_ERASE_END:   Erase from cursor until end of screen
-CURSOR_ERASE_BEG:   Erase from cursor to beginning of screen
-CURSOR_ERASE_ALL:   Erase entire screen
-CURSOR_ERASE_SAVE:  Erase saved lines
-CURSOR_ERASE_EOL:   Erase from cursor to end of line
-CURSOR_ERASE_SOL:   Erase start of line to the cursor
-CURSOR_ERASE_LINE:  Erase the entire line
-*/
-func AnsiCmd(command string, values ...int) error {
-	var err error
-	var escape string = "\033"
+type Ansi struct {
+	Line, Column, Count int
+}
 
-	switch command {
-	case "CURSOR_HOME":
-		fmt.Fprintf(os.Stdout, "%sH", escape)
-	case "CURSOR_MOVE":
-		if len(values) != 2 {
-			err = fmt.Errorf("requires 2 integers, given %d integers", len(values))
-			break
-		}
-		fmt.Fprintf(os.Stdout, "%s[%d;%dH", escape, values[0], values[1])
-	case "CURSOR_UP":
-		if len(values) != 1 {
-			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
-			break
-		}
-		fmt.Fprintf(os.Stdout, "%s[%dA", escape, values[0])
-	case "CURSOR_DOWN":
-		if len(values) != 1 {
-			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
-			break
-		}
-		fmt.Fprintf(os.Stdout, "%s[%dB", escape, values[0])
-	case "CURSOR_RIGHT":
-		if len(values) != 1 {
-			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
-			break
-		}
-		fmt.Fprintf(os.Stdout, "%s[%dC", escape, values[0])
-	case "CURSOR_LEFT":
-		if len(values) != 1 {
-			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
-			break
-		}
-		fmt.Fprintf(os.Stdout, "%s[%dD", escape, values[0])
-	case "CURSOR_BEG_DOWN":
-		if len(values) != 1 {
-			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
-			break
-		}
-		fmt.Fprintf(os.Stdout, "%s[%dE", escape, values[0])
-	case "CURSOR_BEG_UP":
-		if len(values) != 1 {
-			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
-			break
-		}
-		fmt.Fprintf(os.Stdout, "%s[%dF", escape, values[0])
-	case "CURSOR_COLUMN":
-		if len(values) != 1 {
-			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
-			break
-		}
-		fmt.Fprintf(os.Stdout, "%s[%dG", escape, values[0])
-	case "CURSOR_REQ_POS":
-		fmt.Fprintf(os.Stdout, "%s[6n", escape)
-	case "CURSOR_UP_ONE":
-		fmt.Fprintf(os.Stdout, "%s M", escape)
-	case "CURSOR_SAVE_POS":
-		fmt.Fprintf(os.Stdout, "%s 7", escape)
-	case "CURSOR_LOAD_POS":
-		fmt.Fprintf(os.Stdout, "%s 8", escape)
-	case "CURSOR_SAVE_POS2":
-		fmt.Fprintf(os.Stdout, "%s[s", escape)
-	case "CURSOR_LOAD_POS2":
-		fmt.Fprintf(os.Stdout, "%s[u", escape)
-	case "CURSOR_ERASE_END":
-		fmt.Fprintf(os.Stdout, "%s[0J", escape)
-	case "CURSOR_ERASE_BEG":
-		fmt.Fprintf(os.Stdout, "%s[1J", escape)
-	case "CURSOR_ERASE_ALL":
-		fmt.Fprintf(os.Stdout, "%s[2J", escape)
-	case "CURSOR_ERASE_SAVE":
-		fmt.Fprintf(os.Stdout, "%s[3J", escape)
-	case "CURSOR_ERASE_EOL":
-		fmt.Fprintf(os.Stdout, "%s[0K", escape)
-	case "CURSOR_ERASE_SOL":
-		fmt.Fprintf(os.Stdout, "%s[1K", escape)
-	case "CURSOR_ERASE_LINE":
-		fmt.Fprintf(os.Stdout, "%s[2K", escape)
-	}
+// CursorHome moves cursor to home position (0,0)
+func (ansi Ansi) CurosrHome() {
+	fmt.Fprintf(os.Stdout, "\033[H")
+}
 
-	return err
+// CursorMove moves cursor to line Ansi.Line, column Ansi.Column
+func (ansi Ansi) CursorMove() {
+	fmt.Fprintf(os.Stdout, "\033[%d;%dH", ansi.Line, ansi.Column)
+}
+
+// CursorUp moves cursor up Ansi.Count lines
+func (ansi Ansi) CursorUp() {
+	fmt.Fprintf(os.Stdout, "\033[%dA", ansi.Count)
+}
+
+// CursorDown moves cursor down Ansi.Count lines
+func (ansi Ansi) CursorDown() {
+	fmt.Fprintf(os.Stdout, "\033[%dB", ansi.Count)
+}
+
+// CursorRight moves cursor right Ansi.Count lines
+func (ansi Ansi) CursorRight() {
+	fmt.Fprintf(os.Stdout, "\033[%dC", ansi.Count)
+}
+
+// CursorLeft moves cursor left Ansi.Count lines
+func (ansi Ansi) CursorLeft() {
+	fmt.Fprintf(os.Stdout, "\033[%dD", ansi.Count)
+}
+
+// CursorBeginningDown moves cursor to beginning of next line, Ansi.Count lines down
+func (ansi Ansi) CursorBeginningDown() {
+	fmt.Fprintf(os.Stdout, "\033[%dE", ansi.Count)
+}
+
+// CursorBeginningUp moves cursor to beginning of previous line, Ansi.Count lines up
+func (ansi Ansi) CursorBeginningUp() {
+	fmt.Fprintf(os.Stdout, "\033[%dF", ansi.Count)
+}
+
+// CursorColumn moves cursor to column Ansi.Column
+func (ansi Ansi) CursorColumn() {
+	fmt.Fprintf(os.Stdout, "\033[%dG", ansi.Column)
+}
+
+// CursorReqPos request cursor position
+func (ansi Ansi) CursorReqPos() {
+	fmt.Fprintf(os.Stdout, "\033[6n")
+}
+
+// CursorUpOne moves cursor one line up, scrolling if needed
+func (ansi Ansi) CursorUpOne() {
+	fmt.Fprintf(os.Stdout, "\033 M")
+}
+
+// CursorSavePos save cursor position (DEC) (recommended)
+func (ansi Ansi) CursorSavePos() {
+	fmt.Fprintf(os.Stdout, "\033 7")
+}
+
+// CursorLoadPos restores the cursor the the last saved position (DEC)
+func (ansi Ansi) CursorLoadPos() {
+	fmt.Fprintf(os.Stdout, "\033 8")
+}
+
+// CursorSavePosSCO save cursor position (SCO)
+func (ansi Ansi) CursorSavePosSCO() {
+	fmt.Fprintf(os.Stdout, "\033[s")
+}
+
+// CursorLoadPosSCO restores the cursor to the last saved position (SCO)
+func (ansi Ansi) CursorLoadPosSCO() {
+	fmt.Fprintf(os.Stdout, "\033[u")
+}
+
+// CursorEraseScreenEnd erase from cursor until end of screen
+func (ansi Ansi) CursorEraseScreenEnd() {
+	fmt.Fprintf(os.Stdout, "\033[0J")
+}
+
+// CursorEraseScreenBeginning erase from cursor to beginning of screen
+func (ansi Ansi) CursorEraseScreenBeginning() {
+	fmt.Fprintf(os.Stdout, "\033[1J")
+}
+
+// CursorEraseScreenAll erase entire screen
+func (ansi Ansi) CursorEraseScreenAll() {
+	fmt.Fprintf(os.Stdout, "\033[2J")
+}
+
+// CursorEraseSavedLines erase saved lines
+func (ansi Ansi) CursorEraseSavedLines() {
+	fmt.Fprintf(os.Stdout, "\033[3J")
+}
+
+// CursorEraseLineEnd erase from cursor to end of line
+func (ansi Ansi) CursorEraseLineEnd() {
+	fmt.Fprintf(os.Stdout, "\033[0K")
+}
+
+// CursorEraseLineBeginning erase start of line to the cursor
+func (ansi Ansi) CursorEraseLineBeginning() {
+	fmt.Fprintf(os.Stdout, "\033[1K")
+}
+
+// CursorEraseLineAll erase the entire line
+func (ansi Ansi) CursorEraseLineAll() {
+	fmt.Fprintf(os.Stdout, "\033[2K")
 }
 
 // Verbose takes a string and formats and outputs to STDERR
