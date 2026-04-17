@@ -456,8 +456,12 @@ func (ansi Ansi) TextStrikethroughReset() {
 	Color.White.Background = 47
 */
 
-func (ansi Ansi) Color4BitFG() {
+func (ansi Ansi) ColorCyanFG() {
+	fmt.Fprintf(os.Stdout, "\033[36m")
+}
 
+func (ansi Ansi) ColorCyanBG() {
+	fmt.Fprintf(os.Stdout, "\033[46m")
 }
 
 // Verbose takes a string and formats and outputs to STDERR
