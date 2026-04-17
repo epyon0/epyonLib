@@ -95,6 +95,8 @@ func (l *LinkedList) PrintAll() string {
 	var output string
 	currentNode := l.Head()
 
+	fmt.Println("LENGTH: ", l.Length())
+
 	for i := 0; i < l.Length(); i++ {
 		switch {
 		case l.length >= int(math.Pow(10, 10)):
