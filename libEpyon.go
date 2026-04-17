@@ -15,20 +15,40 @@ import (
 )
 
 type Node struct {
-	Data any
-	Next *Node
+	data any
+	next *Node
 }
 
 type LinkedList struct {
-	Head   *Node
-	Length int
+	head   *Node
+	length int
+}
+
+// Data func to export struct field
+func (n *Node) Data() any {
+	return n.data
+}
+
+// Next func to export struct field
+func (n *Node) Next() *Node {
+	return n.next
+}
+
+// Head func to export struct field
+func (l *LinkedList) Head() *Node {
+	return l.head
+}
+
+// Length func to export struct field
+func (l *LinkedList) Length() int {
+	return l.length
 }
 
 // Push adds item to the begining of a linkedlist
 func (l *LinkedList) Push(data any) {
-	newNode := &Node{Data: data, Next: l.Head}
-	l.Head = newNode
-	l.Length++
+	newNode := &Node{data: data, next: l.head}
+	l.head = newNode
+	l.length++
 }
 
 // Pop removes item from the begining of a linkedlist
@@ -36,10 +56,10 @@ func (l *LinkedList) Pop() (any, error) {
 	var data any
 	var err error
 
-	if l.Length > 0 {
-		data = l.Head.Data
-		l.Head = l.Head.Next
-		l.Length--
+	if l.length > 0 {
+		data = l.head.data
+		l.head = l.head.next
+		l.length--
 	} else {
 		err = fmt.Errorf("linkedlist is empty")
 	}
@@ -49,12 +69,12 @@ func (l *LinkedList) Pop() (any, error) {
 
 // Peek returns the data at the head of a linkedlist without modification
 func (l *LinkedList) Peek() any {
-	return l.Head.Data
+	return l.head.data
 }
 
 // IsEmpty returns if the linkedlist is empty or not
 func (l *LinkedList) IsEmpty() bool {
-	if l.Head == nil {
+	if l.head == nil {
 		return true
 	} else {
 		return false
@@ -64,7 +84,7 @@ func (l *LinkedList) IsEmpty() bool {
 // Print returns string to display the value of a given node
 func (l *LinkedList) Print(node *Node) string {
 	if node != nil {
-		return PrintValue(node.Data)
+		return PrintValue(node.data)
 	}
 
 	return ""
@@ -73,11 +93,11 @@ func (l *LinkedList) Print(node *Node) string {
 // PrintAll returns a string to display the value of the entire linkedlist
 func (l *LinkedList) PrintAll() string {
 	var output string
-	currentNode := l.Head
+	currentNode := l.head
 
-	for i := 0; i < l.Length; i++ {
-		output = fmt.Sprintf("%s%d: %s\n", output, i, PrintValue(currentNode.Data))
-		currentNode = currentNode.Next
+	for i := 0; i < l.length; i++ {
+		output = fmt.Sprintf("%s%d: %s\n", output, i, PrintValue(currentNode.data))
+		currentNode = currentNode.next
 	}
 
 	return output
@@ -85,7 +105,7 @@ func (l *LinkedList) PrintAll() string {
 
 // MakeLinkedList creates a new linkedlist
 func MakeLinkedList() *LinkedList {
-	return &LinkedList{Head: nil, Length: 0}
+	return &LinkedList{head: nil, length: 0}
 }
 
 // PipeRead returns byte slice of data from the pipe
