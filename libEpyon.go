@@ -206,6 +206,94 @@ func ClearScreen() error {
 	return err
 }
 
+// AnsiCmd sends ANSI Escape Codes to terminal
+// CURSOR_HOME:        Moves cursor to home position (0,0)
+// CURSOR_MOVE, Y, X:  Moves cursor to line Y, column X
+// CURSOR_UP, N:       Moves cursor up N lines
+// CURSOR_DOWN, N:     Moves cursor down N lines
+// CURSOR_RIGHT, N:    Moves cursor right N columns
+// CURSOR_LEFT, N:     Moves cursor left N columns
+// CURSOR_BEG_DOWN, N: Moves cursor to beginning of next line, N lines down
+// CURSOR_BEG_UP, N:   Moves cursor to beginning of previous line, N lines up
+// CURSOR_COLUMN, N:   Moves cursor to column N
+// CURSOR_REQ_POS:     Request cursor position
+// CURSOR_UP_ONE:      Moves cursor one line up, scrolling if needed
+// CURSOR_SAVE_POS:    Save cursor position (DEC) (recommended)
+// CURSOR_LOAD_POS:    Restores the cursor to the last saved position (DEC)
+// CURSOR_SAVE_POS2:   Save cursor position (SCO)
+// CURSOR_LOAD_POS2:   Restores the cursor to the last saved position (SCO)
+func AnsiCmd(command string, values ...int) error {
+	var err error
+	var escape string = "\033"
+
+	switch command {
+	case "CURSOR_HOME":
+		fmt.Fprintf(os.Stdout, "%sH", escape)
+	case "CURSOR_MOVE":
+		if len(values) != 2 {
+			err = fmt.Errorf("requires 2 integers, given %d integers", len(values))
+			break
+		}
+		fmt.Fprintf(os.Stdout, "%s[%d;%dH", escape, values[0], values[1])
+	case "CURSOR_UP":
+		if len(values) != 1 {
+			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
+			break
+		}
+		fmt.Fprintf(os.Stdout, "%s[%dA", escape, values[0])
+	case "CURSOR_DOWN":
+		if len(values) != 1 {
+			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
+			break
+		}
+		fmt.Fprintf(os.Stdout, "%s[%dB", escape, values[0])
+	case "CURSOR_RIGHT":
+		if len(values) != 1 {
+			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
+			break
+		}
+		fmt.Fprintf(os.Stdout, "%s[%dC", escape, values[0])
+	case "CURSOR_LEFT":
+		if len(values) != 1 {
+			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
+			break
+		}
+		fmt.Fprintf(os.Stdout, "%s[%dD", escape, values[0])
+	case "CURSOR_BEG_DOWN":
+		if len(values) != 1 {
+			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
+			break
+		}
+		fmt.Fprintf(os.Stdout, "%s[%dE", escape, values[0])
+	case "CURSOR_BEG_UP":
+		if len(values) != 1 {
+			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
+			break
+		}
+		fmt.Fprintf(os.Stdout, "%s[%dF", escape, values[0])
+	case "CURSOR_COLUMN":
+		if len(values) != 1 {
+			err = fmt.Errorf("requires 1 integer, given %d integers", len(values))
+			break
+		}
+		fmt.Fprintf(os.Stdout, "%s[%dG", escape, values[0])
+	case "CURSOR_REQ_POS":
+		fmt.Fprintf(os.Stdout, "%s[6n", escape)
+	case "CURSOR_UP_ONE":
+		fmt.Fprintf(os.Stdout, "%s M", escape)
+	case "CURSOR_SAVE_POS":
+		fmt.Fprintf(os.Stdout, "%s 7", escape)
+	case "CURSOR_LOAD_POS":
+		fmt.Fprintf(os.Stdout, "%s 8", escape)
+	case "CURSOR_SAVE_POS2":
+		fmt.Fprintf(os.Stdout, "%s[s", escape)
+	case "CURSOR_LOAD_POS2":
+		fmt.Fprintf(os.Stdout, "%s[u", escape)
+	}
+
+	return err
+}
+
 // Verbose takes a string and formats and outputs to STDERR
 func Verbose(text string, enabled bool) {
 	now := time.Now()
