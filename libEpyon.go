@@ -133,6 +133,19 @@ func PipeExists() (bool, error) {
 	}
 }
 
+// TruncString will truncate the given string to the given width
+func TruncString(text string, width int) string {
+	if width < 0 {
+		return ""
+	}
+
+	runes := []rune(text)
+	if len(runes) <= width {
+		return text
+	}
+	return string(runes[:width])
+}
+
 // ClearScreen will clear the terminal on Windows or Linux
 func ClearScreen() error {
 	var cmd *exec.Cmd
