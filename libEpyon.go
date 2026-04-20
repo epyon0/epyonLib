@@ -118,13 +118,13 @@ func (ansi Ansi) MapKeys(key, modifier, out string) {
 	if ok {
 		switch modifier {
 		case "shift":
-			fmt.Fprintf(os.Stdout, "\033[%s;%s;p", keycode.shift, out)
+			fmt.Fprintf(os.Stdout, "\033[%s;\"%s\";p", keycode.shift, out)
 		case "ctrl":
-			fmt.Fprintf(os.Stdout, "\033[%s;%s;p", keycode.ctrl, out)
+			fmt.Fprintf(os.Stdout, "\033[%s;\"%s\";p", keycode.ctrl, out)
 		case "alt":
-			fmt.Fprintf(os.Stdout, "\033[%s;%s;p", keycode.alt, out)
+			fmt.Fprintf(os.Stdout, "\033[%s;\"%s\";p", keycode.alt, out)
 		default:
-			fmt.Fprintf(os.Stdout, "\033[%s;%s;p", keycode.code, out)
+			fmt.Fprintf(os.Stdout, "\033[%s;\"%s\";p", keycode.code, out)
 		}
 	} else {
 		// dosen't contian that key
