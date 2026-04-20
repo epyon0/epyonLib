@@ -86,8 +86,49 @@ func ClearScreen() error {
 	return err
 }
 
+type KeycodeMap struct {
+	code  string
+	shift string
+	ctrl  string
+	alt   string
+}
+
+var Keymap = map[string]KeycodeMap{
+	"F1":  {code: "0;59", shift: "0;84", ctrl: "0;94", alt: "0;104"},
+	"F2":  {code: "0;60", shift: "0;85", ctrl: "0;95", alt: "0;105"},
+	"F3":  {code: "0;61", shift: "0;86", ctrl: "0;96", alt: "0;106"},
+	"F4":  {code: "0;62", shift: "0;87", ctrl: "0;97", alt: "0;107"},
+	"F5":  {code: "0;63", shift: "0;88", ctrl: "0;98", alt: "0;108"},
+	"F6":  {code: "0;64", shift: "0;89", ctrl: "0;99", alt: "0;109"},
+	"F7":  {code: "0;65", shift: "0;90", ctrl: "0;100", alt: "0;110"},
+	"F8":  {code: "0;66", shift: "0;91", ctrl: "0;101", alt: "0;111"},
+	"F9":  {code: "0;67", shift: "0;92", ctrl: "0;102", alt: "0;112"},
+	"F10": {code: "0;68", shift: "0;93", ctrl: "0;103", alt: "0;113"},
+	"F11": {code: "0;133", shift: "0;135", ctrl: "0;137", alt: "0;139"},
+	"F12": {code: "0;134", shift: "0;136", ctrl: "0;138", alt: "0;140"},
+}
+
 type Ansi struct {
 	Line, Column, Count int
+}
+
+// Binds key to the output string set in out. Valid modifiers are "shift", "ctrl", "alt".  Use "" or anything else for the regular key.  Reference the key value-pairs in 'Keymap'
+func (ansi Ansi) MapKeys(key, modifier, out string) {
+	keycode, ok := Keymap[key]
+	if ok {
+		switch modifier {
+		case "shift":
+			fmt.Fprintf(os.Stdout, "\033[%s;%s;p", keycode.shift, out)
+		case "ctrl":
+			fmt.Fprintf(os.Stdout, "\033[%s;%s;p", keycode.ctrl, out)
+		case "alt":
+			fmt.Fprintf(os.Stdout, "\033[%s;%s;p", keycode.alt, out)
+		default:
+			fmt.Fprintf(os.Stdout, "\033[%s;%s;p", keycode.code, out)
+		}
+	} else {
+		// dosen't contian that key
+	}
 }
 
 // Moves cursor to home position (0,0)
