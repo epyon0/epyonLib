@@ -14,126 +14,6 @@ import (
 	"time"
 )
 
-type Node struct {
-	data any
-	next *Node
-}
-
-type LinkedList struct {
-	head   *Node
-	length int
-}
-
-// Returns the data from that node of the linkedlist
-func (n *Node) Data() any {
-	return n.data
-}
-
-// Returns the next node in the linkedlist
-func (n *Node) Next() *Node {
-	return n.next
-}
-
-// Returns node of the head of the linkedlist
-func (l *LinkedList) Head() *Node {
-	return l.head
-}
-
-// Returns length of linkedlist
-func (l *LinkedList) Length() int {
-	return l.length
-}
-
-// Adds item to the begining of a linkedlist
-func (l *LinkedList) Push(data any) {
-	newNode := &Node{data: data, next: l.head}
-	l.head = newNode
-	l.length++
-}
-
-// Removes item from the begining of a linkedlist
-func (l *LinkedList) Pop() (any, error) {
-	var data any
-	var err error
-
-	if l.length > 0 {
-		data = l.Head().Data()
-		l.head = l.Head().Next()
-		l.length--
-	} else {
-		err = fmt.Errorf("linkedlist is empty")
-	}
-
-	return data, err
-}
-
-// Returns the data at the head of a linkedlist without modification
-func (l *LinkedList) Peek() any {
-	return l.Head().Data()
-}
-
-// Returns if the linkedlist is empty or not
-func (l *LinkedList) IsEmpty() bool {
-	if l.Head() == nil {
-		return true
-	} else {
-		return false
-	}
-}
-
-// Returns string to display the value of a given node
-func (l *LinkedList) Print(node *Node) string {
-	if node != nil {
-		return PrintValue(node.data)
-	}
-
-	return ""
-}
-
-// Returns a string to display the value of the entire linkedlist
-func (l *LinkedList) PrintAll() string {
-	var output string
-	currentNode := l.Head()
-
-	fmt.Println("LENGTH: ", l.Length()-1, " >= ", int(math.Pow(10, 1)))
-
-	for i := 0; i < l.Length(); i++ {
-		switch {
-		case l.Length()-1 >= int(math.Pow(10, 10)):
-			output = fmt.Sprintf("%s%-11d: %s\n", output, i, PrintValue(currentNode.data))
-		case l.Length()-1 >= int(math.Pow(10, 9)):
-			output = fmt.Sprintf("%s%-10d: %s\n", output, i, PrintValue(currentNode.data))
-		case l.Length()-1 >= int(math.Pow(10, 8)):
-			output = fmt.Sprintf("%s%-9d: %s\n", output, i, PrintValue(currentNode.data))
-		case l.Length()-1 >= int(math.Pow(10, 7)):
-			output = fmt.Sprintf("%s%-8d: %s\n", output, i, PrintValue(currentNode.data))
-		case l.Length()-1 >= int(math.Pow(10, 6)):
-			output = fmt.Sprintf("%s%-7d: %s\n", output, i, PrintValue(currentNode.data))
-		case l.Length()-1 >= int(math.Pow(10, 5)):
-			output = fmt.Sprintf("%s%-6d: %s\n", output, i, PrintValue(currentNode.data))
-		case l.Length()-1 >= int(math.Pow(10, 4)):
-			output = fmt.Sprintf("%s%-5d: %s\n", output, i, PrintValue(currentNode.data))
-		case l.Length()-1 >= int(math.Pow(10, 3)):
-			output = fmt.Sprintf("%s%-4d: %s\n", output, i, PrintValue(currentNode.data))
-		case l.Length()-1 >= int(math.Pow(10, 2)):
-			output = fmt.Sprintf("%s%-3d: %s\n", output, i, PrintValue(currentNode.data))
-		case l.Length()-1 >= int(math.Pow(10, 1)):
-			output = fmt.Sprintf("%s%-2d: %s\n", output, i, PrintValue(currentNode.data))
-		default:
-			output = fmt.Sprintf("%s%d: %s\n", output, i, PrintValue(currentNode.data))
-		}
-
-		currentNode = currentNode.next
-	}
-
-	return output
-}
-
-// Creates a new linkedlist
-func MakeLinkedList() *LinkedList {
-	return &LinkedList{head: nil, length: 0}
-}
-
 // Returns byte slice of data from the pipe
 func PipeRead(bufSize int) ([]byte, error) {
 	r := bufio.NewReader(os.Stdin)
@@ -775,6 +655,10 @@ func PrintValue(input any) string {
 		output = fmt.Sprintf("%s]", output)
 	case reflect.Struct:
 		output = fmt.Sprintf("%sstruct%+v", output, input)
+	case reflect.Ptr:
+		if input != nil {
+			output = fmt.Sprintf("%sptr: %s", output, PrintValue(reflect.ValueOf(input).Elem().Interface()))
+		}
 	default:
 		output = fmt.Sprintf("%s%s(%v)", output, t, input)
 	}
