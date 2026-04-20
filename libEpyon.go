@@ -535,33 +535,155 @@ func (ansi Ansi) ColorRgbBG(red, green, blue byte) {
 	fmt.Fprintf(os.Stdout, "\033[48;2;%d;%d;%dm", red, green, blue)
 }
 
-/*
+// Set screen mode to 40 x 25 monochrome (text)
 func (ansi Ansi) ScreenMode40x25Monochrome() {
 	fmt.Fprintf(os.Stdout, "\033[=0h")
 }
 
+// Reset screen mode to 40 x 25 monochrome (text)
+func (ansi Ansi) ScreenMode40x25MonochromeReset() {
+	fmt.Fprintf(os.Stdout, "\033[=0l")
+}
+
+// Set screen mode to 40 x 25 color (text)
 func (ansi Ansi) ScreenMode40x25Color() {
 	fmt.Fprintf(os.Stdout, "\033[=1h")
 }
 
+// Reset screen mode to 40 x 25 color (text)
+func (ansi Ansi) ScreenMode40x25ColorReset() {
+	fmt.Fprintf(os.Stdout, "\033[=1l")
+}
+
+// Set screen mode to 80 x 25 monochrome (text)
 func (ansi Ansi) ScreenMode80x25Monochrome() {
 	fmt.Fprintf(os.Stdout, "\033[=2h")
 }
 
+// Reset screen mode to 80 x 25 monochrome (text)
+func (ansi Ansi) ScreenMode80x25MonochromeReset() {
+	fmt.Fprintf(os.Stdout, "\033[=2l")
+}
+
+// Set screen mode to 80 x 25 color (text)
 func (ansi Ansi) ScreenMode80x25Color() {
 	fmt.Fprintf(os.Stdout, "\033[=3h")
 }
 
-func (ansi Ansi) ScreenMode320x200Color() {
+// Reset screen mode to 80 x 25 color (text)
+func (ansi Ansi) ScreenMode80x25ColorReset() {
+	fmt.Fprintf(os.Stdout, "\033[=3l")
+}
+
+// Set screen mode to 320 x 200 4-color (graphics)
+func (ansi Ansi) ScreenMode320x200Color4() {
 	fmt.Fprintf(os.Stdout, "\033[=4h")
 }
 
+// Reset screen mode to 320 x 200 4-color (graphics)
+func (ansi Ansi) ScreenMode320x200Color4Reset() {
+	fmt.Fprintf(os.Stdout, "\033[=4l")
+}
+
+// Set screen mode to 320 x 200 monochrome (graphics)
 func (ansi Ansi) ScreenMode320x200Monochrome() {
 	fmt.Fprintf(os.Stdout, "\033[=5h")
 }
 
-func (ansi Ansi) ScreenMode640x200
-*/
+// Reset screen mode to 320 x 200 monochrome (graphics)
+func (ansi Ansi) ScreenMode320x200MonochromeReset() {
+	fmt.Fprintf(os.Stdout, "\033[=5l")
+}
+
+// Set screen mode to 640 x 200 monochrome (graphics)
+func (ansi Ansi) ScreenMode640x200Monochrome() {
+	fmt.Fprintf(os.Stdout, "\033[=6h")
+}
+
+// Reset screen mode to 640 x 200 monochrome (graphics)
+func (ansi Ansi) ScreenMode640x200MonochromeReset() {
+	fmt.Fprintf(os.Stdout, "\033[=6l")
+}
+
+// Enables line wrapping
+func (ansi Ansi) ScreenModeLineWrapping() {
+	fmt.Fprintf(os.Stdout, "\033[=7h")
+}
+
+// Disables line wrapping
+func (ansi Ansi) ScreenModeLineWrappingReset() {
+	fmt.Fprintf(os.Stdout, "\033[=7l")
+}
+
+// Set screen mode to 320 x 200 color (graphics)
+func (ansi Ansi) ScreenMode320x200Color() {
+	fmt.Fprintf(os.Stdout, "\033[=13h")
+}
+
+// Reset screen mode to 320 x 200 color (graphics)
+func (ansi Ansi) ScreenMode320x200ColorReset() {
+	fmt.Fprintf(os.Stdout, "\033[=13l")
+}
+
+// Set screen mode to 640 x 200 color (16-color graphics)
+func (ansi Ansi) ScreenMode640x200Color() {
+	fmt.Fprintf(os.Stdout, "\033[=14h")
+}
+
+// Reset screen mode to 640 x 200 color (16-color graphics)
+func (ansi Ansi) ScreenMode640x200ColorReset() {
+	fmt.Fprintf(os.Stdout, "\033[=14l")
+}
+
+// Set screen mode to 640 x 350 monochrome (2-color graphics)
+func (ansi Ansi) ScreenMode640x350Monochrome() {
+	fmt.Fprintf(os.Stdout, "\033[=15h")
+}
+
+// Reset screen mode to 640 x 350 monochrome (2-color graphics)
+func (ansi Ansi) ScreenMode640x350MonochromeReset() {
+	fmt.Fprintf(os.Stdout, "\033[=15l")
+}
+
+// Set screen mode to 640 x 350 color (16-color graphics)
+func (ansi Ansi) ScreenMode640x350Color() {
+	fmt.Fprintf(os.Stdout, "\033[=16h")
+}
+
+// Reset screen mode to 640 x 350 color (16-color graphics)
+func (ansi Ansi) ScreenMode640x350ColorReset() {
+	fmt.Fprintf(os.Stdout, "\033[=16l")
+}
+
+// Set screen mode to 640 x 480 monochrome (2-color graphics)
+func (ansi Ansi) ScreenMode640x480Monochrome() {
+	fmt.Fprintf(os.Stdout, "\033[=17h")
+}
+
+// Reset screen mode to 640 x 480 monochrome (2-color graphics)
+func (ansi Ansi) ScreenMode640x480MonochromeReset() {
+	fmt.Fprintf(os.Stdout, "\033[=17l")
+}
+
+// Set screen mode to 640 x 480 color (16-color graphics)
+func (ansi Ansi) ScreenMode640x480Color() {
+	fmt.Fprintf(os.Stdout, "\033[=18h")
+}
+
+// Reset screen mode to 640 x 480 color (16-color graphics)
+func (ansi Ansi) ScreenMode640x480ColorReset() {
+	fmt.Fprintf(os.Stdout, "\033[=18l")
+}
+
+// Set screen mode to 320 x 200 color (256-color graphics)
+func (ansi Ansi) ScreenMode320x200Color256() {
+	fmt.Fprintf(os.Stdout, "\033[=19h")
+}
+
+// Reset screen mode to 320 x 200 color (256-color graphics)
+func (ansi Ansi) ScreenMode320x200Color256Reset() {
+	fmt.Fprintf(os.Stdout, "\033[=19l")
+}
 
 // Takes a string and formats and outputs to STDERR
 func Verbose(text string, enabled bool) {
