@@ -198,7 +198,9 @@ func AsciiChar(input byte) string {
 
 // Returns a string of bytes formated in binary/hex/decimal representation
 func PrintBytes(input []byte) string {
+	var output string
 
+	return output
 }
 
 // Returns byte slice of data from the pipe
