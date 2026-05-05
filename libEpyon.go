@@ -116,6 +116,85 @@ func PrintValue(input any) string {
 	return output
 }
 
+func AsciiChar(input byte) string {
+	var output string
+
+	switch input {
+	case 0:
+		output = "NUL"
+	case 1:
+		output = "SOH"
+	case 2:
+		output = "STX"
+	case 3:
+		output = "ETX"
+	case 4:
+		output = "EOT"
+	case 5:
+		output = "ENQ"
+	case 6:
+		output = "ACK"
+	case 7:
+		output = "BEL"
+	case 8:
+		output = "BS "
+	case 9:
+		output = "HT "
+	case 10:
+		output = "LF "
+	case 11:
+		output = "VT "
+	case 12:
+		output = "FF "
+	case 13:
+		output = "CR "
+	case 14:
+		output = "SO "
+	case 15:
+		output = "SI "
+	case 16:
+		output = "DLE"
+	case 17:
+		output = "DC1"
+	case 18:
+		output = "DC2"
+	case 19:
+		output = "DC3"
+	case 20:
+		output = "DC4"
+	case 21:
+		output = "NAK"
+	case 22:
+		output = "SYN"
+	case 23:
+		output = "ETB"
+	case 24:
+		output = "CAN"
+	case 25:
+		output = "EM "
+	case 26:
+		output = "SUB"
+	case 27:
+		output = "ESC"
+	case 28:
+		output = "FS "
+	case 29:
+		output = "GS "
+	case 30:
+		output = "RS "
+	case 31:
+		output = "US "
+	case 32:
+		output = "SP "
+	case 127:
+		output = "DEL"
+	default:
+		output = fmt.Sprintf(" %c ", input)
+	}
+
+	return output
+}
+
 // Returns byte slice of data from the pipe
 func PipeRead(bufSize int) ([]byte, error) {
 	r := bufio.NewReader(os.Stdin)
