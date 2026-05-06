@@ -201,7 +201,7 @@ func PrintBytes(input []byte) string {
 	var output string
 
 	for i, item := range input {
-		output += fmt.Sprintf("%08b 0x%02X [%3.3s]   ", item, item, AsciiChar(item))
+		output += fmt.Sprintf("%-08b 0x%-02X [%-3s]   ", item, item, AsciiChar(item))
 		if (i+1)%8 == 0 {
 			output += "\n"
 		}
