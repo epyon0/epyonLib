@@ -205,12 +205,13 @@ func PrintBytes(input []byte) string {
 	var offsetLength int = len(fmt.Sprintf("%X", len(input)))
 
 	for i, item := range input {
-		if (i+1)%8 == 0 || i == 0 {
+		if i == 0 {
 			output += fmt.Sprintf("0x%0*X:  ", offsetLength, i)
 		}
 		output += fmt.Sprintf("%08b 0x%02X [%-3s]   ", item, item, AsciiChar(item))
 		if (i+1)%8 == 0 {
 			output += "\n"
+			output += fmt.Sprintf("0x%0*X:  ", offsetLength, i)
 		}
 	}
 
