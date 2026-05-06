@@ -213,7 +213,7 @@ func PrintBytes(input []byte, width uint) string {
 			output += fmt.Sprintf("0x%0*X:  ", offsetLength, i)
 		}
 		output += fmt.Sprintf("%08b 0x%02X [%-3s]   ", item, item, AsciiChar(item))
-		if ((uint)i+1)%width == 0 {
+		if (uint(i)+1)%width == 0 {
 			output += "\n"
 			output += fmt.Sprintf("0x%0*X:  ", offsetLength, i)
 		}
