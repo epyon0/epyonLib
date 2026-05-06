@@ -191,6 +191,9 @@ func AsciiChar(input byte) string {
 		output = "DEL"
 	default:
 		output = fmt.Sprintf(" %c ", input)
+		if len(output) != 3 {
+			output = "   "
+		}
 	}
 
 	return output
