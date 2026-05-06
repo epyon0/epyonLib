@@ -200,7 +200,11 @@ func AsciiChar(input byte) string {
 }
 
 // Returns a string of bytes formated in binary/hex/decimal representation
-func PrintBytes(input []byte) string {
+func PrintBytes(input []byte, width int) string {
+	if width == 0 {
+		width = 8
+	}
+
 	var output string
 	var offsetLength int = len(fmt.Sprintf("%X", len(input)))
 
@@ -209,7 +213,7 @@ func PrintBytes(input []byte) string {
 			output += fmt.Sprintf("0x%0*X:  ", offsetLength, i)
 		}
 		output += fmt.Sprintf("%08b 0x%02X [%-3s]   ", item, item, AsciiChar(item))
-		if (i+1)%8 == 0 {
+		if (i+1)%width == 0 {
 			output += "\n"
 			output += fmt.Sprintf("0x%0*X:  ", offsetLength, i)
 		}
